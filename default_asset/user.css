@@ -1,0 +1,21 @@
+.single_service img {
+    height: 40px;
+    width: 40px;
+    background: 
+    #fff;
+    object-fit: cover;
+    margin-bottom: 6px;
+}
+.single_service{
+	padding-top: 20px;
+}
+
+.testimonialImage {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #2e344e;
+	border-radius: 100%;
+	margin-right: 15px;
+	background:#fff;
+    overflow: hidden;
+}
