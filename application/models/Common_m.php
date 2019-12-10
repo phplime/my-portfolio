@@ -64,7 +64,7 @@ public function get_id_by_slug($name)
 	$this->db->select('u.id,username');
 	$this->db->from('users as u');
 	$this->db->where('u.username',$name);
-	$this->db->where('u.is_verify',1);
+	$this->db->where('u.is_verify',0);
 	$this->db->where('u.is_active',1);
 	$query = $this->db->get();
 	$query = $query->row_array();
@@ -103,8 +103,32 @@ public function single_select_by_user($id,$table)
 }
 
 
+/**
+  ** get resume
+**/
 
-
+public function get_resume_by_user($id)
+{
+	
+	$this->db->select('rt.*');
+	$this->db->from('resume_type rt');
+	$this->db->where('user_id',$id);
+	$this->db->where('status',1);
+	$query = $this->db->get();
+	$query = $query->result_array();
+	foreach ($query as $key => $value) {
+		$this->db->select('r.*');
+        $this->db->from('resume r');
+        $this->db->where('r.type_id',$value['id']);
+        $this->db->where('status',1);
+        $this->db->where('user_id',$id);
+        $this->db->order_by('start_year','DESC');
+        $query2 = $this->db->get();
+        $query2 = $query2->result_array();
+        $query[$key]['resume'] = $query2;
+    }
+	return $query;
+}
 
 
 

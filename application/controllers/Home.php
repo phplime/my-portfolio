@@ -37,6 +37,9 @@ class Home extends CI_Controller {
 		$data['page_title'] = "Resume";
 		$data['slug'] = $slug;
 		$id = get_id_by_slug($slug);
+		$data['skills'] = $this->common_m->select_all_by_user($id,'skills');
+		$data['all_resume'] = $this->common_m->get_resume_by_user($id);
+		// echo "<pre>";print_r($data['resume']);exit();
 		$data['main_content'] = $this->load->view('resume', $data, TRUE);
 		$this->load->view('index',$data);
 	}
@@ -47,7 +50,8 @@ class Home extends CI_Controller {
 		$data['page_title'] = "Portfolio";
 		$data['slug'] = $slug;
 		$id = get_id_by_slug($slug);
-        // $data['upcoming'] = $this->common_model->get_upcoming();
+        $data['portfolio_type'] = $this->common_m->select_all_by_user($id,'portfolio_type');
+        $data['portfolio'] = $this->common_m->select_all_by_user($id,'portfolio');
         // echo "<pre>";print_r($data['upcoming']);exit();
 		$data['main_content'] = $this->load->view('portfolio', $data, TRUE);
 		$this->load->view('index',$data);
@@ -64,14 +68,11 @@ class Home extends CI_Controller {
 	}
 
 
-	public function work()
+	public function error_404()
 	{
 		$data = array();
-		$data['page_title'] = "Home";
-        $data['page'] = "User Panel";
-        $data['account_information']= $this->common_model->select('account_information');
-		$data['main_content'] = $this->load->view('work', $data, TRUE);
-		$this->load->view('index',$data);
+		$data['page_title'] = "Error 404";
+		$this->load->view('404', $data);
 	}
 	
 

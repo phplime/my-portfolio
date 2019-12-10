@@ -37,7 +37,7 @@
 							  <li><a data-toggle="tab" href="#image">Image</a></li>
 							</ul>
 							<div class="tab-content">
-							  <div id="icon" class="tab-pane fade in <?= !empty($data['icon'])?'active':''; ?> mt-15">
+							  <div id="icon" class="tab-pane fade in active <?= !empty($data['icon'])?'active':''; ?> mt-15">
 							   		<input type="text" name="icon" id="icon" class="form-control" placeholder="Font awsome icon" value='<?= !empty($data['icon'])?$data['icon']:set_value('icon'); ?>'>
 					        		<span class="error"><?php echo form_error('icon'); ?></span>
 							  </div>

@@ -53,10 +53,10 @@
 				</div>
 				<div class="navMenu">
 					<ul>
-						<li><a href="<?php echo base_url('home/'.$slug); ?>"  class="<?= isset($page_title) && $page_title=="Home"?"active":'';?>">Home</a></li>
-						<li><a href="<?php echo base_url('home/about/'.$slug); ?>" class="<?= isset($page_title) && $page_title=="About"?"active":'';?>">About</a></li>
-						<li><a href="<?php echo base_url('home/resume/'.$slug); ?>" class="<?= isset($page_title) && $page_title=="Resume"?"active":'';?>">Resume</a></li>
-						<li><a href="<?php echo base_url('home/portfolio/'.$slug); ?>" class="<?= isset($page_title) && $page_title=="Portfolio"?"active":'';?>">Portfolios</a></li>
+						<li><a href="<?php echo base_url('me-'.$slug); ?>"  class="<?= isset($page_title) && $page_title=="Home"?"active":'';?>">Home</a></li>
+						<li><a href="<?php echo base_url('about-'.$slug); ?>" class="<?= isset($page_title) && $page_title=="About"?"active":'';?>">About</a></li>
+						<li><a href="<?php echo base_url('resume-'.$slug); ?>" class="<?= isset($page_title) && $page_title=="Resume"?"active":'';?>">Resume</a></li>
+						<li><a href="<?php echo base_url('portfolio-'.$slug); ?>" class="<?= isset($page_title) && $page_title=="Portfolio"?"active":'';?>">Portfolios</a></li>
 						<li><a href="" class="<?= isset($page_title) && $page_title=="Contact"?"active":'';?>">Contact</a></li>
 						
 					</ul>
