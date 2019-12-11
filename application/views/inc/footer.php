@@ -14,6 +14,7 @@
     =============== -->
 	<!-- <script src="https://kit.fontawesome.com/f0aa4a072d.js" crossorigin="anonymous"></script> -->
     <!-- slick slider js -->
+		<script src="<?= base_url();?>assets/plugins/jquery.appear.js" ></script>
 		<script src="<?= base_url();?>assets/plugins/slickSlider/slick.min.js" ></script>
 	<!-- slick slider js -->
 

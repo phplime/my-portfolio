@@ -17,7 +17,7 @@
 						</div>
 						<div class="rightProgress">
 							<div class="progress">
-							  <div class="progress-bar" role="progressbar" style="width: <?= $skill['level']?>%" aria-valuenow="<?= $skill['level']?>" aria-valuemin="0" aria-valuemax="100"></div>
+							  <div class="progress-bar" role="progressbar" data-present="<?= $skill['level']?>" aria-valuenow="<?= $skill['level']?>" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 					</div>

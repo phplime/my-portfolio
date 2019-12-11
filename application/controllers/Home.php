@@ -26,7 +26,7 @@ class Home extends CI_Controller {
 		$id = get_id_by_slug($slug);
         $data['services'] = $this->common_m->select_all_by_user($id,'services');
         $data['reviews'] = $this->common_m->select_all_by_user($id,'reviews');
-        // echo "<pre>";print_r($data['reviews']);exit();
+        $data['about'] = $this->common_m->get_about($id);
 		$data['main_content'] = $this->load->view('about', $data, TRUE);
 		$this->load->view('index',$data);
 	}
@@ -39,7 +39,6 @@ class Home extends CI_Controller {
 		$id = get_id_by_slug($slug);
 		$data['skills'] = $this->common_m->select_all_by_user($id,'skills');
 		$data['all_resume'] = $this->common_m->get_resume_by_user($id);
-		// echo "<pre>";print_r($data['resume']);exit();
 		$data['main_content'] = $this->load->view('resume', $data, TRUE);
 		$this->load->view('index',$data);
 	}
@@ -52,7 +51,6 @@ class Home extends CI_Controller {
 		$id = get_id_by_slug($slug);
         $data['portfolio_type'] = $this->common_m->select_all_by_user($id,'portfolio_type');
         $data['portfolio'] = $this->common_m->select_all_by_user($id,'portfolio');
-        // echo "<pre>";print_r($data['upcoming']);exit();
 		$data['main_content'] = $this->load->view('portfolio', $data, TRUE);
 		$this->load->view('index',$data);
 	}

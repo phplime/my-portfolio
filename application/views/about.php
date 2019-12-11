@@ -11,23 +11,25 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<div class="aboutContent">
-				<div class="aboutDetails">
-					<h3>I am Devid Chester</h3>
-					<p>I am a frontend web developer. I can provide clean code and pixel perfect design. I also make website more & more interactive with web animations.</p>
-					<ul>
-						<li><b>Full Name</b> Devid Chester </li>
-						<li><b>Age</b>25 Years </li>
-						<li><b>Nationality</b> Bangladeshi </li>
-						<li><b>Languages</b> Bangla,English </li>
-						<li><b>Address</b> Dhaka, Bangladesh </li>
-						<li><b>Freelance</b> Available</li>
-					</ul>
-				</div>
-				<div class="aboutBtn">
-					<button class="default-button about-Btn">Download</button>
-				</div>
+			<?php foreach ($about as $row): ?>
+				<div class="aboutContent">
+					<div class="aboutDetails">
+						<h3><?= $row['title'];?></h3>
+						<p><?= $row['about_me'];?></p>
+						<ul>
+							<li><b>Full Name</b> <?= $row['full_name'];?></li>
+							<li><b>Nationality</b> <?= $row['nationality'];?></li>
+							<li><b>Age</b> <?= $row['dob'];?></li>
+							<?php foreach ($row['about_content'] as $content): ?>
+								<li><b><?= $content['label'];?></b> <?= $content['value'];?> </li>
+							<?php endforeach ?>
+						</ul>
+					</div>
+					<div class="aboutBtn">
+						<button class="default-button about-Btn">Download</button>
+					</div>
 			</div>
+			<?php endforeach ?>
 		</div>
 	</div><!-- row -->
 	<?php if(count($services) > 0): ?>

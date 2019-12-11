@@ -41,7 +41,7 @@ class Admin_m extends CI_Model {
  	{
 		$this->db->select('u.*');
 		$this->db->select('(SELECT count(users.id) FROM users 
-    	 	WHERE (users.is_active = 1)) 
+    	 	WHERE (users.is_active = 1 AND users.is_verify = 1)) 
     		AS reg_user',TRUE);
 		$this->db->select('(SELECT count(users.id) FROM users) AS total_user',TRUE);
 		$this->db->select('c.name as country_name');
@@ -110,8 +110,8 @@ class Admin_m extends CI_Model {
     **/ 
 	public function count_images()
 	{
-		$this->db->select('count(g.id) as total_image');
-		$this->db->from('gallery as g');
+		$this->db->select('count(p.id) as total_portfolio');
+		$this->db->from('portfolio as p');
 		$query = $this->db->get();
 		$query = $query->row();
 		return $query;
@@ -175,6 +175,43 @@ class Admin_m extends CI_Model {
 		$this->db->order_by('id','ASC');
 		$query = $this->db->get();
 		$query = $query->result_array();
+		return $query;
+	}
+
+	public function get_about($id)
+	{
+		$this->db->select('a.*');
+		$this->db->from('about a');
+		if(auth('user_type') != 1){
+			$this->db->where('user_id',auth('id'));
+		}
+		if($id !=0){
+			$this->db->where('id',$id);
+		}
+		$this->db->order_by('id','ASC');
+		$query = $this->db->get();
+		$query = $query->result_array();
+		foreach ($query as $key => $value) {
+			$this->db->select('ac.*');
+	        $this->db->from('about_content ac');
+	        $this->db->where('ac.about_id',$value['id']);
+	        $this->db->where('status',1);
+	        $this->db->order_by('id','ASC');
+	        $query2 = $this->db->get();
+	        $query2 = $query2->result_array();
+	        $query[$key]['about_content'] = $query2;
+    	}
+		return $query;
+	}
+
+	public function single_select_by_user($id,$table)
+	{
+		$this->db->select();
+		$this->db->from($table);
+		$this->db->where('user_id',$id);
+		$this->db->where('status',1);
+		$query = $this->db->get();
+		$query = $query->row_array();
 		return $query;
 	}
 

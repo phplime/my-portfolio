@@ -222,6 +222,94 @@ class Profile extends CI_Controller {
 	}
 
 
+	public function about()
+	{
+		$data = array();
+		$data['page_title'] = "About Me";
+        $data['page'] = "About";
+        $data['data'] = false;
+        $data['home'] = $this->admin_m->get_about(0);
+        $data['my_info'] = $this->admin_m->single_select_by_user(auth('id'),'home');
+        // echo "<pre>";print_r($data['home']);exit();
+		$data['main_content'] = $this->load->view('admin/dashboard/about/home', $data, TRUE);
+		$this->load->view('admin/index',$data);
+	}
+
+	public function edit_about($id)
+	{
+		$data = array();
+		$data['page_title'] = "About Me";
+        $data['page'] = "About";
+        $data['home'] = $this->admin_m->get_about(0);
+        $data['data'] =$this->admin_m->get_about($id);
+        $data['my_info'] = $this->admin_m->single_select_by_user(auth('id'),'home');
+		$data['main_content'] = $this->load->view('admin/dashboard/about/home', $data, TRUE);
+		$this->load->view('admin/index',$data);
+	}
+
+	/**
+	  *** add_skills
+	**/ 
+	public function add_about(){
+		$this->form_validation->set_rules('full_name', 'Label', 'trim|required|xss_clean');
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('error', validation_errors());
+			$this->about();
+			}else{
+				$data = array(
+					'user_id' => auth('id'),
+					'full_name' =>  $this->input->post('full_name',true),
+					'nationality' =>  $this->input->post('nationality',true),
+					'dob' => $this->input->post('dob',true),
+					'created_at' => d_time(),
+				);
+				$id = $this->input->post('id',true);
+				if($id==0){
+					$insert = $this->admin_m->insert($data,'about');
+				}else{
+					$insert = $this->admin_m->update($data,$id,'about');
+				}
+
+				if($insert){
+					$label = $this->input->post('label',true);
+					$i=0;	
+						if(!empty($label)){
+							foreach ($label as $key => $value) {
+								$data = array(
+									'about_id' => $insert,
+									'label' => $value,
+									'value' => $this->input->post('value',true)[$i],
+								);
+								$i++;
+								echo "<pre>";print_r($data);
+								$this->admin_m->insert($data,'about_content');
+							}
+						}
+
+					// update old fields value
+					$label_ex = $this->input->post('label_ex',true);
+					$j=0;	
+						if(!empty($label_ex)){
+							foreach ($label_ex as $key => $value_ex) {
+								$data_ex = array(
+									'about_id' => $insert,
+									'label' => $value_ex,
+									'value' => $this->input->post('value_ex',true)[$j],
+								);
+								$this->admin_m->update($data_ex,$this->input->post('ex_id')[$j],'about_content');
+								$j++;
+							}
+						}
+					$this->session->set_flashdata('success', 'Save change Successfull');
+					redirect(base_url('admin/profile/about'));
+				}else{
+					$this->session->set_flashdata('error', 'Somethings were wrong');
+					redirect(base_url('admin/profile/about'));
+				}	
+		}
+	}
+
+
 	public function reviews()
 		{
 			$data = array();

@@ -3,3 +3,26 @@
 	padding-top: 12px;
 	font-size: 16px;
 }
+
+.about_me_group {
+  display: flex;
+}
+.left_label {
+  min-width: 23%;
+}
+.mr-5{
+	margin-right: 5px;
+}
+
+.mr-10{
+	margin-right: 10px;
+}
+.about_me_group a {
+    padding: 12px 8px;
+    color: red;
+	border: 1px solid #ddd;
+    margin-left: 5px;
+}
+.about_me_group a:hover{
+	background: #ddd;
+}

@@ -37,38 +37,64 @@
 							<div class="row">
 								<div class="form-group col-md-12">
 							      	<label for="title">Title</label>
-							        <input type="text" name="title" id="title" class="form-control" placeholder="Title" value="<?= !empty($data['title'])?$data['title']:set_value('title'); ?>">
-							        <span class="error"><?php echo form_error('title'); ?></span>
+							        <p><?= $my_info['title'];?></p>
 							    </div>
 							    <div class="col-md-12">
 									<label>About Me</label>
-									<textarea name="about_me" id="" cols="5" rows="5" class="form-control"><?= !empty($data['about_me'])?$data['about_me']:set_value('about_me'); ?></textarea>
-									<span class="error"><?php echo form_error('about_me'); ?></span>
+									<p><?= $my_info['about_me'];?></p>
 								</div>
 							</div>
 
-							<div class="row mt-15">
-								<div class="col-md-12">
-									<div class="social_area">
-										<?php foreach ($social_sites as $site): ?>
-											<label class="<?= empty($data[$site['name']])?"":"label_active"; ?>"><input type="checkbox" <?= empty($data[$site['name']])?"":"checked"; ?> class="social_label" name="<?= $site['name']; ?>" value="<?= $site['id']?>"> <?= $site['icon'];?> <?= ucfirst($site['name']); ?></label>
-										<?php endforeach ?>
+							<div class="mt-15">
+								<div class="form-group about_me_group">
+									<div class="left_label">
+										<label>Full Name</label>
 									</div>
+									<input type="text" name="full_name" id="name" class="form-control" placeholder="full name " value="<?= !empty($data[0]['full_name'])?$data[0]['full_name']:set_value('full_name'); ?>">
 								</div>
-								<?php foreach ($social_sites as $site): ?>
-								<div class="form-group col-sm-6 col-lg-6 col-xs-12 <?= empty($data[$site['name']])?"hidden":""; ?>  site_field_<?= $site['id']?>" >
-									<div class="social_icon_area">
-										<div class="s_icon"><?= $site['icon']?></div>
-										<input type="text" name="<?= $site['name']?>" class="form-control" placeholder="Your <?= ucfirst($site['name'])?>" value="<?= !empty($data[$site['name']])?$data[$site['name']]:set_value($site['name']); ?>">
+								<div class="form-group about_me_group">
+									<div class="left_label">
+										<label>Nationality</label>
 									</div>
+									<input type="text" name="nationality" id="name" class="form-control" placeholder="Nationality" value="<?= !empty($data[0]['nationality'])?$data[0]['nationality']:set_value('nationality'); ?>">
 								</div>
-							<?php endforeach ?>
-							</div>
 
-						    <input type="hidden" name="id" value="<?= isset($data['id'])?$data['id']:0;?>">
+								<div class="form-group about_me_group">
+									<div class="left_label">
+										<label>Date of Birth</label>
+									</div>
+									<div class="input-group date">
+					                   <input type="text" name="dob" id="dob" class="form-control datepicker" placeholder="yyyy-mm-dd" value="<?= !empty($data[0]['dob'])?$data[0]['dob']:set_value('dob'); ?>">
+					                   <div class="input-group-addon">
+					                    	<i class="fa fa-calendar"></i>
+					                  	</div>
+					                </div>
+
+								</div>
+								<?php if(isset($data[0]['id'])): ?>
+									<?php foreach ($data[0]['about_content'] as $value): ?>
+										<div class="form-group about_me_group">
+											<input type="text" name="label_ex[]" id="name" class="form-control mr-10" value="<?= $value['label']?>" placeholder="Label">
+											<input type="text" name="value_ex[]" id="value" class="form-control " value="<?= $value['value']?>" placeholder="Value">
+										</div>
+										<input type="hidden" name="ex_id[]" value="<?= $value['id']!=0?$value['id']:0; ?>">
+									<?php endforeach ?>
+								<?php else: ?>
+									<div class="form-group about_me_group">
+										<input type="text" name="label[]" id="name" class="form-control mr-10" placeholder="Label">
+
+										<input type="text" name="value[]" id="value" class="form-control " placeholder="Value">
+									</div>
+								<?php endif ?>
+									<div class="input_fields_wrap"></div>
+									<div class="pull-right">
+										<a href="javascript:;"  class="btn add_field_button">Add New</a>
+									</div>
+							</div>
+						    <input type="hidden" name="id" value="<?= isset($data[0]['id'])?$data[0]['id']:0;?>">
 						</div><!-- /.box-body -->
 						<div class="box-footer" style="">
-							<?php if(isset($data['id']) && $data['id'] !=0){ ?>
+							<?php if(isset($data[0]['id']) && $data[0]['id'] !=0){ ?>
 								<div class="pull-left">
 					          			<a href="<?php echo base_url('admin/profile'); ?>" class="btn btn-default btn-block btn-flat">Cancel</a>
 					          	</div>
@@ -99,10 +125,8 @@
 							<thead>
 								<tr>
 									<th>Sl</th>
-									<th>Title</th>
-									<th>About Me</th>
-									<th>username</th>
-									<th width="20%">Social Sites</th>
+									<th>Name</th>
+									<th>About Content</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -110,16 +134,18 @@
 								<?php $i=1; foreach ($home as $row): ?>
 									<tr>
 										<td><?= $i;?></td>
-										<td><?= $row['title'] ?></td>
-										<td><?= $row['about_me'] ?></td>
-										<td><?= get_user_info_by_id($row['user_id'])['username'] ?></td>
+										<td><?= $row['full_name'] ?></td>
 										<td>
-											<?php foreach ($social_sites as $site): ?>
-												<?php if(!empty($row[$site['name']])): ?>
-												<label class="user_social_icon"> <?= $site['icon'];?></label>
-											<?php endif ?>
-										<?php endforeach ?></td>
-										<td><a href="<?php echo base_url('admin/profile/edit_home/'.$row['id']); ?>" class="btn btn-info">Edit</a></td>
+											<table class="table table-bordered">
+												<?php foreach ($row['about_content'] as $value): ?>
+												<tr>
+													<td><?= $value['label']?></td>
+													<td><?= $value['value']?></td>
+												</tr>
+												<?php endforeach ?>
+											</table>
+										</td>
+										<td><a href="<?php echo base_url('admin/profile/edit_about/'.$row['id']); ?>" class="btn btn-info">Edit</a></td>
 									</tr>
 								<?php $i++; endforeach ?>
 							</tbody>
